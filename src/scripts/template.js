@@ -1,3 +1,5 @@
+import { showFormattedDate } from "./index";
+
 export function generateLoaderTemplate() {
   return `
     <div class="loader"></div>
@@ -44,8 +46,36 @@ export function generateReviewsListErrorTemplate(message) {
 
 export function generateReviewItemTemplate({
   id,
+  username,
   title,
   description,
   coverUrl,
   createdAt,
-}) {}
+}) {
+  return `
+    <div tabindex="0" class="review-item" data-reviewid="${id}">
+          <img class="review-item__image" src="${coverUrl}" alt="${title}">
+          <div class="review-item__body">
+            <div class="review-item__main">
+              <h2 id="review-title" class="review-item__title">${title}</h2>
+              <div class="review-item__more-info">
+                <div class="review-item__createdat">
+                  <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, "id-ID")}
+                </div>
+              </div>
+            </div>
+            <div id="review-description" class="review-item__description">
+              ${description}
+            </div>
+            <div class="review-item__more-info">
+              <div class="review-item__author">
+                Dibuat oleh: ${username}
+              </div>
+            </div>
+            <a class="btn review-item__read-more" href="#/review/${id}">
+              Selengkapnya <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+  `;
+}
