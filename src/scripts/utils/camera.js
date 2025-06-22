@@ -1,5 +1,3 @@
-import * as stream from "node:stream";
-
 export default class Camera {
   #currentStream;
   #streaming = false;
