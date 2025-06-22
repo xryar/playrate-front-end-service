@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
@@ -13,7 +13,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jep?g|gif)$/i,
+        test: /\.(png|jpe?g|gif)$/i,
         type: "asset/resource",
       },
     ],
@@ -21,12 +21,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src/index.html"),
-      excludeChunks: ["sw"],
     }),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "src/public"),
+          from: path.resolve(__dirname, "src/public/"),
           to: path.resolve(__dirname, "dist/"),
         },
       ],

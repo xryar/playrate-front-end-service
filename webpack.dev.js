@@ -1,6 +1,6 @@
-const merge = require("webpack-merge");
-const common = require("./webpack.common");
-const path = require("node:path");
+const path = require("path");
+const common = require("./webpack.common.js");
+const { merge } = require("webpack-merge");
 
 module.exports = merge(common, {
   mode: "development",
@@ -8,7 +8,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.css$/,
-        user: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
