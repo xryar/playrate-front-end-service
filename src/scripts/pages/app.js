@@ -35,7 +35,7 @@ class App {
     document.body.addEventListener("click", (event) => {
       if (
         !this.#navigationDrawer.contains(event.target) &&
-        this.#drawerButton.contains(event.target)
+        !this.#drawerButton.contains(event.target)
       ) {
         this.#navigationDrawer.classList.remove("open");
       }

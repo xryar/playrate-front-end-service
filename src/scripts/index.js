@@ -1,5 +1,5 @@
 import Camera from "./utils/camera";
-//import "../styles/style.css";
+import "../styles/style.css";
 import App from "./pages/app";
 
 document.addEventListener("DOMContentLoaded", async () => {
