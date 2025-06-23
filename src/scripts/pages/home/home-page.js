@@ -1,5 +1,5 @@
 import HomePresenter from "./home-presenter";
-import * as ReviewsAPI from "../../../data/api";
+import * as ReviewsAPI from "../../data/api";
 
 export default class HomePage {
     #presenter;
