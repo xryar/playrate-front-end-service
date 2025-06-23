@@ -1,5 +1,3 @@
-import {getReviewById} from "../../data/api";
-
 export default class DetailPresenter {
   #reviewId;
   #view;
