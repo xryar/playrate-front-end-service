@@ -10,7 +10,7 @@ export default class RegisterPage {
             <div class="register-form-container">
                 <h1 class="register__title">Daftar Akun</h1>
                 
-                <form class="register__form" class="register__form">
+                <form id="register__form" class="register__form">
                     <div class="form-control">
                         <label for="name-input" class="register-form__name-title">Nama Lengkap</label>
                         
