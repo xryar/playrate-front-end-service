@@ -18,7 +18,7 @@ export default class HomePagePresenter {
         return;
       }
 
-      this.#view.populateReviewsList(response.message, response.data);
+      this.#view.populateReviewsList(response.message, response.data.reviews);
     } catch (error) {
       console.error("initialReviews Error: ", error);
     } finally {
