@@ -16,6 +16,16 @@ export function getAccessToken() {
   }
 }
 
+export function putAccessToken(accessToken) {
+  try {
+    localStorage.setItem(CONFIG.ACCESS_TOKEN, accessToken);
+    return true
+  } catch (error) {
+    console.log("Put Access Token Error: ", error);
+    return false;
+  }
+}
+
 export function getRefreshToken() {
   try {
     const refreshToken = localStorage.getItem(CONFIG.REFRESH_TOKEN);
