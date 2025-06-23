@@ -1,4 +1,4 @@
-import { showFormattedDate } from "./index";
+import { showFormattedDate } from "./utils";
 
 export function generateLoaderTemplate() {
   return `

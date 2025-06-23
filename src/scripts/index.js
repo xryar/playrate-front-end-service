@@ -1,53 +1,20 @@
-export function showFormattedDate(date, locale = "en-US", options = {}) {
-  return new Date(date).toLocaleDateString(locale, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    ...options,
+import Camera from "./utils/camera";
+import "../styles/style.css";
+import App from "./pages/app";
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const app = new App({
+    content: document.getElementById("main-content"),
+    drawerButton: document.getElementById("drawer-button"),
+    navigationDrawer: document.getElementById("navigation-drawer"),
+    skipLinkButton: document.getElementById("skip-link"),
   });
-}
 
-export function convertBase64ToBlob(
-  base64Data,
-  contentType = "",
-  sliceSize = 512,
-) {
-  const byteCharacters = atob(base64Data);
-  const byteArrays = [];
+  await app.renderPage();
 
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
+  window.addEventListener("hashchange", async () => {
+    await app.renderPage();
 
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  return new Blob(byteArrays, { type: contentType });
-}
-
-export function setupSkipToContent(element, mainContent) {
-  element.addEventListener("click", () => mainContent.focus());
-}
-
-export function transitionHelper({ skipTransition = false, updateDOM }) {
-  if (skipTransition || !document.startViewTransition) {
-    const updateCallbackDone = Promise.resolve(updateDOM()).then(() => {});
-
-    return {
-      ready: Promise.reject(Error("View transition unsupported.")),
-      updateCallbackDone,
-      finished: updateCallbackDone,
-    };
-  }
-
-  return document.startViewTransition(updateDOM);
-}
-
-export function sleep(time = 1000) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+    Camera.stopALlStreams();
+  });
+});
