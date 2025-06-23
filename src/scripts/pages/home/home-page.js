@@ -1,16 +1,17 @@
-import HomePresenter from "./home-presenter";
+import HomePagePresenter from "./home-page-presenter";
 import * as ReviewsAPI from "../../data/api";
 import {
-    generateLoaderAbsoluteTemplate, generateReviewItemTemplate,
-    generateReviewsListEmptyTemplate,
-    generateReviewsListErrorTemplate
+  generateLoaderAbsoluteTemplate,
+  generateReviewItemTemplate,
+  generateReviewsListEmptyTemplate,
+  generateReviewsListErrorTemplate,
 } from "../../template";
 
 export default class HomePage {
-    #presenter;
+  #presenter;
 
-    async render() {
-        return `
+  async render() {
+    return `
           <section class="container">
             <h1 class="section-title">List Review</h1>
             
@@ -20,54 +21,57 @@ export default class HomePage {
             </div>
           </section>
         `;
+  }
+
+  async afterRender() {
+    this.#presenter = new HomePagePresenter({
+      view: this,
+      model: ReviewsAPI,
+    });
+
+    await this.#presenter.initialReviews();
+  }
+
+  populateReviewsList(message, listReviews) {
+    if (listReviews.left <= 0) {
+      this.populateReviewsListEmpty();
+      return;
     }
 
-    async afterRender() {
-        this.#presenter = new HomePresenter({
-            view: this,
-            model: ReviewsAPI,
-        });
+    const html = listReviews.reduce((acc, review) => {
+      return acc.concat(
+        generateReviewItemTemplate({
+          id: review.id,
+          username: review.username,
+          title: review.title,
+          description: review.description,
+          coverUrl: review.coverUrl,
+          createdAt: review.createdAt,
+        }),
+      );
+    }, "");
 
-        await this.#presenter.initialReviews();
-    }
-
-    populateReviewsList(message, listReviews) {
-        if (listReviews.left <= 0) {
-            this.populateReviewsListEmpty();
-            return;
-        }
-
-        const html = listReviews.reduce((acc, review) => {
-            return acc.concat(
-                generateReviewItemTemplate({
-                    id: review.id,
-                    username: review.username,
-                    title: review.title,
-                    description: review.description,
-                    coverUrl: review.coverUrl,
-                    createdAt: review.createdAt,
-                })
-            );
-        }, '');
-
-        document.getElementById("reviews-list").innerHTML = `
+    document.getElementById("reviews-list").innerHTML = `
             <div class="reviews-list">${html}</div>
         `;
-    }
+  }
 
-    populateReviewsListEmpty() {
-        document.getElementById("reviews-list").innerHTML = generateReviewsListEmptyTemplate();
-    }
+  populateReviewsListEmpty() {
+    document.getElementById("reviews-list").innerHTML =
+      generateReviewsListEmptyTemplate();
+  }
 
-    populateReviewsListError(message) {
-        document.getElementById("reviews-list").innerHTML = generateReviewsListErrorTemplate(message);
-    }
+  populateReviewsListError(message) {
+    document.getElementById("reviews-list").innerHTML =
+      generateReviewsListErrorTemplate(message);
+  }
 
-    showLoading() {
-        document.getElementById("reviews-list-loading-container").innerHTML = generateLoaderAbsoluteTemplate();
-    }
+  showLoading() {
+    document.getElementById("reviews-list-loading-container").innerHTML =
+      generateLoaderAbsoluteTemplate();
+  }
 
-    hideLoading() {
-        document.getElementById("reviews-list-loading-container").innerHTML = "";
-    }
+  hideLoading() {
+    document.getElementById("reviews-list-loading-container").innerHTML = "";
+  }
 }
