@@ -1,7 +1,6 @@
 import LoginPresenter from "./login-presenter";
 import * as ReviewsAPI from "../../../data/api";
 import * as AuthModel from "../../../utils/auth";
-import * as events from "node:events";
 
 export default class LoginPage {
   #presenter = null;
