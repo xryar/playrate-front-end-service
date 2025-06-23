@@ -1,4 +1,4 @@
-import HomePagePresenter from "./home-page-presenter";
+import HomePresenter from "./home-presenter";
 import * as ReviewsAPI from "../../data/api";
 import {
   generateLoaderAbsoluteTemplate,
@@ -24,7 +24,7 @@ export default class HomePage {
   }
 
   async afterRender() {
-    this.#presenter = new HomePagePresenter({
+    this.#presenter = new HomePresenter({
       view: this,
       model: ReviewsAPI,
     });

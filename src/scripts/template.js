@@ -79,3 +79,58 @@ export function generateReviewItemTemplate({
         </div>
   `;
 }
+
+export function generateReviewDetailTemplate({
+  coverUrl,
+  description,
+  username,
+  createdAt,
+}) {
+  const createdAtFormatted = showFormattedDate(createdAt, "id-ID");
+  const coverHtml = generateImageDetailTemplate(coverUrl);
+
+  return `
+        <div class="container">
+            <div class="review-detail__images__container">
+                <div id="image" class="review-detail__image">${coverHtml}</div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="review-detail__body">
+                <div class="review-detail__more-info">
+                    <div class="review-detail__more-info__inline">
+                      <div id="createdat" class="review-detail__createdat" data-value="${createdAtFormatted}"><i class="fas fa-calendar-alt"></i></div>
+                    </div>
+                    </div>
+                    <div id="author" class="review-detail__author" data-value="${username}">Dibuat oleh:</div>
+              </div>
+              
+              <div class="review-detail__body__description__container">
+                <h2 class="review-detail__description__title">Deskripsi</h2>
+                <div id="description" class="review-detail__description__body">
+                  ${description}
+                </div>
+              </div>
+        </div>
+    `;
+}
+
+export function generateImageDetailTemplate(coverUrl = null, alt ="") {
+  if (!coverUrl) {
+    return `<img class="review-detail__image" src="" alt="Placeholder Image">`;
+  }
+
+  return `
+        <img class="review-detail__image" src="${coverUrl}" alt="${alt}">
+    `;
+}
+
+export function generateReviewDetailErrorTemplate(message) {
+  return `
+    <div id="review-detail-error" class="review-detail__error">
+      <h2>Terjadi kesalahan pengambilan detail story</h2>
+      <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
+    </div>
+  `;
+}

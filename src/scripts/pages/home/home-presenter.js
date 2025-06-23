@@ -1,4 +1,4 @@
-export default class HomePagePresenter {
+export default class HomePresenter {
   #view;
   #model;
 
