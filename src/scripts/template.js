@@ -21,7 +21,7 @@ export function generateUnauthenticatedNavigationListTemplate() {
 
 export function generateAuthenticatedNavigationListTemplate() {
   return `
-        <li> <a id="new-review-button" class="btn new-review-button" href="#/new">Add Review<i class="fas fa-plus"></i></a></li>
+        <li> <a id="new-review-button" class="btn new-review-button" href="#/new">Add Review <i class="fas fa-plus"></i></a></li>
         <li> <a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
     `;
 }
