@@ -1,6 +1,5 @@
 import AddPresenter from "./add-presenter";
 import * as ReviewsAPI from "../../data/api";
-import * as events from "node:events";
 import { convertBase64ToBlob } from "../../utils";
 import Camera from "../../utils/camera";
 
