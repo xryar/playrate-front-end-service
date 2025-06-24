@@ -18,7 +18,7 @@ export default class AddPresenter {
       const response = await this.#model.addReview(data);
 
       if (!response.ok) {
-        console.error('postNewReview Error: ', response);
+        console.error("postNewReview Error: ", response);
         this.#view.storeFailed(response.message);
         return;
       }

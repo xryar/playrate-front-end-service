@@ -13,7 +13,7 @@ const routes = {
   "/register": () => checkUnauthenticatedRouteOnly(new RegisterPage()),
 
   "/": () => checkAuthenticatedRoute(new HomePage()),
-  "/new": () =>checkAuthenticatedRoute(new AddPage()),
+  "/new": () => checkAuthenticatedRoute(new AddPage()),
   "/reviews/:id": () => checkAuthenticatedRoute(new DetailPage()),
 };
 
