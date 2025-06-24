@@ -29,7 +29,7 @@ class App {
 
   #setupDrawer() {
     this.#drawerButton.addEventListener("click", () => {
-      this.#navigationDrawer.classList.toggle("open");
+      this.#navigationDrawer.classList.toggle("-translate-x-full");
     });
 
     document.body.addEventListener("click", (event) => {
@@ -37,12 +37,12 @@ class App {
         !this.#navigationDrawer.contains(event.target) &&
         !this.#drawerButton.contains(event.target)
       ) {
-        this.#navigationDrawer.classList.remove("open");
+        this.#navigationDrawer.classList.add("-translate-x-full");
       }
 
       this.#navigationDrawer.querySelectorAll("a").forEach((link) => {
         if (link.contains(event.target)) {
-          this.#navigationDrawer.classList.remove("open");
+          this.#navigationDrawer.classList.add("-translate-x-full");
         }
       });
     });
@@ -50,25 +50,29 @@ class App {
 
   #setupNavigationList() {
     const isLogin = !!getAccessToken();
-    const navList = this.#navigationDrawer.children.namedItem("nav-list");
 
-    if (!isLogin) {
-      navList.innerHTML = generateUnauthenticatedNavigationListTemplate();
-      return;
+    const navListDesktop = document.getElementById("nav-list");
+    const navListMobile = document.getElementById("nav-list-mobile");
+
+    const navHTML = isLogin
+      ? generateAuthenticatedNavigationListTemplate()
+      : generateUnauthenticatedNavigationListTemplate();
+
+    navListDesktop.innerHTML = navHTML;
+    navListMobile.innerHTML = navHTML;
+
+    if (isLogin) {
+      const logoutButtons = document.querySelectorAll("#logout-button");
+      logoutButtons.forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+          event.preventDefault();
+          if (confirm("Apakah Anda yakin ingin keluar?")) {
+            getLogout();
+            location.hash = "/login";
+          }
+        });
+      });
     }
-
-    navList.innerHTML = generateAuthenticatedNavigationListTemplate();
-
-    const logoutButton = document.getElementById("logout-button");
-    logoutButton.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      if (confirm("Apakah Anda yakin ingin keluar?")) {
-        getLogout();
-
-        location.hash = "/login";
-      }
-    });
   }
 
   async renderPage() {
