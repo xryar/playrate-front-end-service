@@ -8,13 +8,13 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
   },
   devServer: {
     static: path.resolve(__dirname, "dist"),
-    port: 9000,
+    port: 9001,
     client: {
       overlay: {
         errors: true,

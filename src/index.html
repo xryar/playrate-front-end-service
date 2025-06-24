@@ -15,20 +15,32 @@
     />
   </head>
   <body>
-    <header>
-      <button id="skip-link" class="skip-link">Menuju Konten Utama</button>
+    <header class="sticky top-0 bg-white shadow z-50">
+      <a href="#main-content" id="skip-link"
+         class="sr-only focus:not-sr-only absolute left-2 top-2 bg-primary text-white px-4 py-2 rounded">
+         Menuju Konten Utama
+      </a>
 
-      <div class="main-header container">
-        <a class="brand-name__link" href="#/">
-          <span class="brand-name__link__text">Playrate</span>
-        </a>
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- Brand -->
+        <a href="#/" class="text-xl font-bold text-primary">Playrate</a>
 
-        <nav id="navigation-drawer" class="navigation-drawer">
-          <ul id="nav-list" class="nav-list"></ul>
+        <!-- Desktop Nav -->
+        <nav class="hidden md:block">
+          <ul id="nav-list" class="flex gap-4 items-center"></ul>
         </nav>
 
-        <button id="drawer-button" class="drawer-button">☰</button>
+        <!-- Mobile Drawer Button -->
+        <button id="drawer-button" class="md:hidden text-2xl text-primary">
+          ☰
+        </button>
       </div>
+
+      <!-- Mobile Drawer -->
+      <nav id="navigation-drawer"
+        class="fixed top-[72px] left-0 w-full bg-white shadow-md p-4 z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
+        <ul id="nav-list-mobile" class="flex flex-col gap-2"></ul>
+      </nav>
     </header>
 
     <main tabIndex="-1" id="main-content" class="main-content"></main>

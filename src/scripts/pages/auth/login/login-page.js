@@ -7,35 +7,38 @@ export default class LoginPage {
 
   async render() {
     return `
-            <section class="login-container">
-                <article class="login-form-container">
-                  <h1 class="login__title">Masuk akun</h1>
-        
-                  <form id="login-form" class="login-form">
-                    <div class="form-control">
-                      <label for="username-input" class="login-form__username-title">Username</label>
-        
-                      <div class="login-form__title-container">
-                        <input id="username-input" type="text" name="username" placeholder="Masukkan Username Anda">
-                      </div>
-                    </div>
-                    <div class="form-control">
-                      <label for="password-input" class="login-form__password-title">Password</label>
-        
-                      <div class="login-form__title-container">
-                        <input id="password-input" type="password" name="password" placeholder="Masukkan password Anda">
-                      </div>
-                    </div>
-                    <div class="form-buttons login-form__form-buttons">
-                      <div id="submit-button-container">
-                        <button class="btn" type="submit">Masuk</button>
-                      </div>
-                      <p class="login-form__do-not-have-account">Belum punya akun? <a href="#/register">Daftar</a></p>
-                    </div>
-                  </form>
-                </article>
-            </section>
-        `;
+      <section class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-white to-secondary">
+        <article class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+          <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">Masuk akun</h1>
+          
+          <form id="login-form" class="space-y-6">
+            <div>
+              <label for="username-input" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+              <input id="username-input" type="text" name="username" placeholder="Masukkan Username Anda"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            
+            <div>
+              <label for="password-input" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <input id="password-input" type="password" name="password" placeholder="Masukkan password Anda"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            
+            <div id="submit-button-container">
+               <button type="submit" 
+                  class="w-full bg-primary text-white py-2 px-4 rounded-md font-semibold hover:bg-primary-hover transition">
+                  Masuk
+               </button>
+            </div>
+            
+            <p class="text-center text-sm text-gray-600">
+              Belum punya akun? 
+              <a href="#/register" class="text-primary font-medium hover:underline">Daftar</a>
+            </p>
+          </form>
+        </article>
+      </section>
+    `;
   }
 
   async afterRender() {
@@ -75,15 +78,22 @@ export default class LoginPage {
 
   showSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-            <button class="btn" type="submit" disabled>
-                <i class="fa fa-spinner loader-button"></i> Masuk
-            </button>
-        `;
+      <button class="w-full bg-primary text-white py-2 px-4 rounded-md font-semibold flex items-center justify-center gap-2" type="submit" disabled>
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        Masuk
+      </button>
+    `;
   }
 
   hideSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-            <button class="btn" type="submit">Masuk</button>
+            <button type="submit" 
+              class="w-full bg-primary text-white py-2 px-4 rounded-md font-semibold hover:bg-primary-hover transition">
+              Masuk
+            </button>
         `;
   }
 }

@@ -14,15 +14,35 @@ export function generateLoaderAbsoluteTemplate() {
 
 export function generateUnauthenticatedNavigationListTemplate() {
   return `
-        <li> <a id="login-button" href="#/login">Login</a></li>
-        <li> <a id="register-button" href="#/register">Register</a></li>
+        <li> 
+          <a id="login-button" href="#/login"
+            class="px-4 py-2 rounded hover:bg-gray-100 text-sm font-medium text-gray-700 transition">
+            Login
+          </a>
+        </li>
+        <li> 
+          <a id="register-button" href="#/register"
+            class="px-4 py-2 rounded hover:bg-gray-100 text-sm font-medium text-gray-700 transition">
+            Register
+          </a>
+        </li>
     `;
 }
 
 export function generateAuthenticatedNavigationListTemplate() {
   return `
-        <li> <a id="new-review-button" class="btn new-review-button" href="#/new">Add Review <i class="fas fa-plus"></i></a></li>
-        <li> <a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+        <li> 
+          <a id="new-review-button" href="#/new"
+            class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition font-medium">
+            <i class="fas fa-plus"></i> Add Review
+          </a>
+        </li>
+        <li> 
+          <a id="logout-button" href="#/logout"
+            class="inline-flex items-center gap-2 text-red-600 font-semibold hover:underline">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </li>
     `;
 }
 
