@@ -6,38 +6,40 @@ export default class RegisterPage {
 
   async render() {
     return `
-        <section class="register-container">
-            <div class="register-form-container">
-                <h1 class="register__title">Daftar Akun</h1>
+        <section class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-white to-secondary">
+            <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">Daftar Akun</h1>
                 
-                <form id="register-form" class="register-form">
-                    <div class="form-control">
-                        <label for="name-input" class="register-form__name-title">Nama Lengkap</label>
-                        
-                        <div class="register-form__title-container">
-                            <input id="name-input" type="text" name="name" placeholder="Masukkan nama lengkap Anda">
-                        </div>
+                <form id="register-form" class="space-y-6">
+                    <div>
+                        <label for="name-input" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <input id="name-input" type="text" name="name" placeholder="Masukkan nama lengkap Anda"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                     </div>
-                    <div class="form-control">
-                        <label for="username-input" class="register-form__username-title">Username</label>
-                        
-                        <div class="register-form__title-container">
-                            <input id="username-input" type="text" name="username" placeholder="Masukkan Username Anda">
-                        </div>
+                    
+                    <div>
+                        <label for="username-input" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <input id="username-input" type="text" name="username" placeholder="Masukkan Username Anda"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                     </div>
-                    <div class="form-control">
-                        <label for="password-input" class="register-form__password-title">Password</label>
-                        
-                        <div class="register-form__title-container">
-                            <input id="password-input" type="password" name="password" placeholder="Masukkan Password Anda">
-                        </div>
+                    
+                    <div >
+                        <label for="password-input" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input id="password-input" type="password" name="password" placeholder="Masukkan Password Anda"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                     </div>
-                    <div class="form-buttons register-form__form-buttons">
-                        <div id="submit-button-container">
-                          <button class="btn" type="submit">Daftar akun</button>
-                        </div>
-                        <p class="register-form__already-have-account">Sudah punya akun? <a href="#/login">Masuk</a></p>
+                    
+                    <div id="submit-button-container">
+                        <button type="submit"
+                            class="w-full bg-primary text-white py-2 px-4 rounded-md font-semibold hover:bg-primary-hover transition" >
+                            Daftar akun
+                        </button>
                     </div>
+                    
+                    <p class="text-center text-sm text-gray-600">
+                        Sudah punya akun? 
+                        <a href="#/login" class="text-primary font-medium hover:underline">Masuk</a>
+                    </p>
                 </form>
             </div>
         </section>
