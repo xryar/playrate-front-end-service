@@ -12,21 +12,24 @@ export default class DetailPresenter {
   async showReviewDetail() {
     this.#view.showReviewDetailLoading();
     try {
-        const response = await this.#model.getReviewById(this.#reviewId);
-        console.log("API Response:", response);
+      const response = await this.#model.getReviewById(this.#reviewId);
+      console.log("API Response:", response);
 
-        if (!response.ok) {
-            console.error("showReviewDetail Error: ", response);
-            this.#view.populateReviewDetailError(response.message);
-            return;
-        }
+      if (!response.ok) {
+        console.error("showReviewDetail Error: ", response);
+        this.#view.populateReviewDetailError(response.message);
+        return;
+      }
 
-        await this.#view.populateReviewDetail(response.message, response.data.review);
+      await this.#view.populateReviewDetail(
+        response.message,
+        response.data.review,
+      );
     } catch (e) {
-        console.error("showReviewDetail Error: ", e);
-        this.#view.populateReviewDetailError(e.message);
+      console.error("showReviewDetail Error: ", e);
+      this.#view.populateReviewDetailError(e.message);
     } finally {
-        this.#view.hideReviewDetailLoading();
+      this.#view.hideReviewDetailLoading();
     }
   }
 }

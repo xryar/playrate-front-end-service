@@ -116,7 +116,7 @@ export function generateReviewDetailTemplate({
     `;
 }
 
-export function generateImageDetailTemplate(coverUrl = null, alt ="") {
+export function generateImageDetailTemplate(coverUrl = null, alt = "") {
   if (!coverUrl) {
     return `<img class="review-detail__image" src="" alt="Placeholder Image">`;
   }
@@ -130,7 +130,7 @@ export function generateReviewDetailErrorTemplate(message) {
   return `
     <div id="review-detail-error" class="review-detail__error">
       <h2>Terjadi kesalahan pengambilan detail story</h2>
-      <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
+      <p>${message ? message : "Gunakan jaringan lain atau laporkan error ini."}</p>
     </div>
   `;
 }

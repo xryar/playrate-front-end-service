@@ -2,9 +2,9 @@ import DetailPresenter from "./detail-presenter";
 import * as ReviewsAPI from "../../data/api";
 import { parseActivePathname } from "../../routes/url-parser";
 import {
-    generateLoaderAbsoluteTemplate,
-    generateReviewDetailErrorTemplate,
-    generateReviewDetailTemplate,
+  generateLoaderAbsoluteTemplate,
+  generateReviewDetailErrorTemplate,
+  generateReviewDetailTemplate,
 } from "../../template";
 
 export default class DetailPage {
@@ -31,23 +31,26 @@ export default class DetailPage {
   }
 
   async populateReviewDetail(message, review) {
-    document.getElementById("review-detail").innerHTML = generateReviewDetailTemplate({
+    document.getElementById("review-detail").innerHTML =
+      generateReviewDetailTemplate({
         username: review.username,
         description: review.description,
         coverUrl: review.coverUrl,
         createdAt: review.createdAt,
-    });
+      });
   }
 
   populateReviewDetailError(message) {
-      document.getElementById("review-detail").innerHTML = generateReviewDetailErrorTemplate(message);
+    document.getElementById("review-detail").innerHTML =
+      generateReviewDetailErrorTemplate(message);
   }
 
   showReviewDetailLoading() {
-      document.getElementById("review-detail-loading-container").innerHTML = generateLoaderAbsoluteTemplate();
+    document.getElementById("review-detail-loading-container").innerHTML =
+      generateLoaderAbsoluteTemplate();
   }
 
   hideReviewDetailLoading() {
-      document.getElementById("review-detail-loading-container").innerHTML = "";
+    document.getElementById("review-detail-loading-container").innerHTML = "";
   }
 }
