@@ -13,6 +13,7 @@ export default class DetailPresenter {
     this.#view.showReviewDetailLoading();
     try {
         const response = await this.#model.getReviewById(this.#reviewId);
+        console.log("API Response:", response);
 
         if (!response.ok) {
             console.error("showReviewDetail Error: ", response);
@@ -20,7 +21,7 @@ export default class DetailPresenter {
             return;
         }
 
-        await this.#view.populateReviewDetail(response.message, response.data);
+        await this.#view.populateReviewDetail(response.message, response.data.review);
     } catch (e) {
         console.error("showReviewDetail Error: ", e);
         this.#view.populateReviewDetailError(e.message);

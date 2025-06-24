@@ -72,7 +72,7 @@ export function generateReviewItemTemplate({
                 Dibuat oleh: ${username}
               </div>
             </div>
-            <a class="btn review-item__read-more" href="#/review/${id}">
+            <a class="btn review-item__read-more" href="#/reviews/${id}">
               Selengkapnya <i class="fas fa-arrow-right"></i>
             </a>
           </div>
