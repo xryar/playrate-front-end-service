@@ -12,13 +12,13 @@ export default class DetailPage {
 
   async render() {
     return `
-            <section>
-                <div class="review-detail__container">
-                    <div id="review-detail" class="review-detail"></div>
-                    <div id="review-detail-loading-container"></div>
-                </div>
-            </section>
-        `;
+       <section>
+           <div class="review-detail__container">
+               <div id="review-detail" class="review-detail"></div>
+               <div id="review-detail-loading-container"></div>
+           </div>
+       </section>
+    `;
   }
 
   async afterRender() {
