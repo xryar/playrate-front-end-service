@@ -12,76 +12,63 @@ export default class AddPage {
 
   async render() {
     return `
-      <section>
-          <div class="new-review__header">
-              <div class="container">
-                  <h1 class="new-review__header__title">Buat Review Baru</h1>
+       <section class="min-h-screen flex items-center justify-center px-4 py-10 bg-gradient-to-b from-white to-secondary">
+          <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+            <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Buat Review Baru</h1>
+    
+            <form id="new-form" class="space-y-6">
+              <!-- Judul -->
+              <div>
+                <label for="title-input" class="block text-sm font-medium text-gray-700 mb-1">Judul Review</label>
+                <input id="title-input" name="title" type="text" placeholder="Masukkan judul review"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" />
               </div>
+    
+              <!-- Gambar -->
+              <div>
+                <p class="text-sm text-gray-600 mb-1">Foto dokumentasi</p>
+                <div class="flex gap-2 flex-wrap">
+                  <button id="image-input-button" type="button"
+                    class="px-4 py-2 border rounded text-sm hover:bg-gray-50">Ambil Gambar</button>
+                  <input id="image-input" name="image" type="file" accept="image/*" class="hidden" />
+                  <button id="open-image-camera-button" type="button"
+                    class="px-4 py-2 border rounded text-sm hover:bg-gray-50">Buka Kamera</button>
+                </div>
+                <div id="camera-container" class="hidden mt-4 space-y-2">
+                  <video id="camera-video" class="w-full h-auto rounded border"></video>
+                  <canvas id="camera-canvas" class="hidden"></canvas>
+                  <div class="flex items-center gap-2">
+                    <select id="camera-select" class="border rounded px-2 py-1 text-sm"></select>
+                    <button id="camera-take-button" type="button"
+                      class="bg-primary text-white px-4 py-2 rounded text-sm hover:bg-primary-hover">Ambil Gambar</button>
+                  </div>
+                </div>
+                <ul id="image-taken" class="mt-4 flex flex-wrap gap-2"></ul>
+              </div>
+    
+              <!-- Deskripsi -->
+              <div>
+                <label for="description-input" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                <textarea id="description-input" name="description" placeholder="Masukkan deskripsi"
+                  class="w-full min-h-[100px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
+              </div>
+    
+              <!-- Tombol -->
+              <div class="space-y-3 pt-4">
+                <span id="submit-button-container" class="block">
+                  <button type="submit"
+                    class="w-full bg-primary text-white py-2 rounded font-semibold hover:bg-primary-hover transition">
+                    Buat Review
+                  </button>
+                </span>
+                <a href="#/"
+                  class="block w-full text-center text-primary font-medium hover:underline transition text-sm">
+                  Batal
+                </a>
+              </div>
+            </form>
           </div>
-      </section>
-      
-      <section class="container">
-          <div class="new-form__container">
-              <form id="new-form" class="new-form">
-                  <div class="form-control">
-                    <label for="image-input" class="new-form__image__title"></label>
-                    <div id="image-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
-      
-                    <div class="new-form__image__container">
-                      <div class="new-form__image__buttons">
-                        <button id="image-input-button" class="btn btn-outline" type="button">Ambil Gambar</button>
-                        <input
-                          id="image-input"
-                          class="new-form__image__input"
-                          name="image"
-                          type="file"
-                          accept="image/*"
-                          aria-describedby="image-more-info"
-                        >
-                        <button id="open-image-camera-button" class="btn btn-outline" type="button">
-                          Buka Kamera
-                        </button>
-                      </div>
-                      <div id="camera-container" class="new-form__camera__container">
-                        <video id="camera-video" class="new-form__camera__video">
-                          video stream not available.
-                        </video>
-      
-                        <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
-      
-                        <div class="new-form__camera__tools">
-                          <select id="camera-select"></select>
-                          <div class="new-form__camera__tools_buttons">
-                            <button id="camera-take-button" class="btn" type="button">
-                              Ambil Gambar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <ul id="image-taken" class="new-form__image__outputs"></ul>
-                    </div>
-                  </div>
-              
-                  <div class="form-control">
-                      <label for="description-input" class="new-form__description__title"></label>
-                  
-                      <div class="new-form__description__container">
-                          <textarea
-                            id="description-input"
-                            name="description"
-                            placeholder="Masukkan deskripsi"
-                          ></textarea>
-                      </div>
-                  </div>
-                  <div class="form-buttons">
-                    <span id="submit-button-container">
-                      <button class="btn" type="submit">Buat Review</button>
-                    </span>
-                    <a class="btn btn-outline" href="#/">Batal</a>
-                  </div>
-              </form>
-          </div>
-      </section>
+       </section>
     `;
   }
 
@@ -99,12 +86,15 @@ export default class AddPage {
     this.#form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const data = {
-        image: this.#takenImage ? this.#takenImage.blob : null,
-        description: document.getElementById("description").value,
-      };
+      const title = document.getElementById("title-input").value;
+      const description = document.getElementById("description-input").value;
 
-      await this.#presenter.postNewReview(data);
+      if (!this.#takenImage || !this.#takenImage.blob) {
+        alert("Gambar wajib diunggah!");
+        return;
+      }
+
+      await this.#presenter.postNewReview({ title, description, cover: this.#takenImage.blob });
     });
 
     document
@@ -124,24 +114,24 @@ export default class AddPage {
       });
 
     // camera
-    const cameraContainer = document.getElementById("camera-container");
     document
-      .getElementById("open-image-camera-button")
-      .addEventListener("click", async (event) => {
-        cameraContainer.classList.toggle("open");
+    .getElementById('open-image-camera-button')
+    .addEventListener('click',  async (event) => {
+      const cameraContainer = document.getElementById('camera-container');
 
-        this.#isCameraOpen = cameraContainer.classList.contains("open");
-        if (this.#isCameraOpen) {
-          event.currentTarget.textContent = "Tutup Camera";
-          this.#setupCamera();
-          this.#camera.launch();
+      this.#isCameraOpen = !this.#isCameraOpen;
 
-          return;
-        }
-
-        event.currentTarget.textContent = "Buka Kamera";
+      if (this.#isCameraOpen) {
+        cameraContainer.classList.remove('hidden');
+        event.currentTarget.textContent = 'Tutup Kamera';
+        this.#setupCamera();
+        await this.#camera.launch();
+      } else {
+        cameraContainer.classList.add('hidden');
+        event.currentTarget.textContent = 'Buka Kamera';
         this.#camera.stop();
-      });
+      }
+    });
   }
 
   #setupCamera() {
@@ -177,16 +167,17 @@ export default class AddPage {
   }
 
   async #populateTakenPicture() {
-    if (!this.#takenImage || this.#takenImage.blob) {
+    if (!this.#takenImage || !this.#takenImage.blob) {
       console.error("Error: Blob tidak tersedia!", this.#takenImage);
       return;
     }
 
     const imageUrl = URL.createObjectURL(this.#takenImage.blob);
     document.getElementById("image-taken").innerHTML = `
-      <li class="new-form__image__outputs-item">
-         <button type="button" id="delete-picture-button" class="new-form__image__outputs-item__delete-btn">
-           <img src="${imageUrl}" alt="image">
+      <li>
+         <button type="button" id="delete-picture-button" class="relative-group">
+           <img src="${imageUrl}" alt="image" class="w-32 h-32 object-cover rounded border"/>
+           <span class="absolute top-1 right-1 bg-white text-red-600 text-xs rounded-full px-2 py-0.5 shadow hidden group-hover:block">X</span>
          </button>
       </li>
     `;
@@ -220,15 +211,22 @@ export default class AddPage {
 
   showSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-          <button class="btn" type="submit" disabled>
-            <i class="fas fa-spinner loader-button"></i> Buat Review
-          </button>
-        `;
+      <button type="submit" disabled
+        class="bg-primary text-white px-6 py-2 rounded flex items-center justify-center gap-2 w-full">
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        Buat Review
+      </button>
+    `;
   }
 
   hideSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-          <button class="btn" type="submit">Buat Review</button>
-        `;
+      <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:bg-primary-hover transition w-full">
+         Buat Review
+      </button>
+    `;
   }
 }
