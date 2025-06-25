@@ -77,13 +77,13 @@ export default class Camera {
 
       const html = list.reduce((accumulator, device, currentIndex) => {
         return accumulator.concat(`
-                    <option 
-                        value="${device.deviceId}"
-                        ${deviceId == device.deviceId ? "selected" : ""}
-                    >
-                        ${device.label || `Camera ${currentIndex + 1}`}
-                    </option>    
-                `);
+          <option 
+              value="${device.deviceId}"
+              ${deviceId == device.deviceId ? "selected" : ""}
+          >
+              ${device.label || `Camera ${currentIndex + 1}`}
+          </option>    
+        `);
       }, "");
 
       this.#selectCameraElement.innerHTML = html;
