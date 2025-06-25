@@ -67,11 +67,14 @@ export default class HomePage {
   }
 
   showLoading() {
-    document.getElementById("reviews-list-loading-container").innerHTML =
+    const loading = document.getElementById("reviews-list-loading-container");
+    loading.classList.remove("hidden");
+    loading.innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
   hideLoading() {
-    document.getElementById("reviews-list-loading-container").innerHTML = "";
+    const loading = document.getElementById("reviews-list-loading-container");
+    loading.classList.add("hidden");
   }
 }
