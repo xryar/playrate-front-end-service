@@ -8,7 +8,12 @@ export function generateLoaderTemplate() {
 
 export function generateLoaderAbsoluteTemplate() {
   return `
-        <div class="loader loader-absolute"></div>
+        <div class="flex justify-center items-center w-full h-32">
+           <svg class="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+           </svg>
+        </div>
     `;
 }
 
@@ -48,20 +53,20 @@ export function generateAuthenticatedNavigationListTemplate() {
 
 export function generateReviewsListEmptyTemplate() {
   return `
-        <div id="reviews-list-empty" class="reviews-list__empty">
-            <h2>Tidak ada Review yang tersedia</h2>
-            <p>Saat ini, tidak ada Review yang dapat ditampilkan</p>
-        </div>
-    `;
+     <div class="text-center text-gray-600 py-16">
+         <h2 class="text-2xl font-semibold">Tidak ada Review yang tersedia</h2>
+         <p>Saat ini, tidak ada Review yang dapat ditampilkan</p>
+     </div>
+  `;
 }
 
 export function generateReviewsListErrorTemplate(message) {
   return `
-        <div id="reviews-list-error" class="reviews-list__error">
-            <h2>Terjadi kesalahan pengambilan daftar Review</h2>
-            <p>${message ? message : "Gunakan jaringan lain atau laporkan error ini."}</p>
-        </div>
-    `;
+     <div class="text-center text-red-500 py-16">
+         <h2 class="text-2xl font-semibold">Terjadi kesalahan pengambilan daftar Review</h2>
+         <p>${message ? message : "Gunakan jaringan lain atau laporkan error ini."}</p>
+     </div>
+  `;
 }
 
 export function generateReviewItemTemplate({
@@ -73,30 +78,28 @@ export function generateReviewItemTemplate({
   createdAt,
 }) {
   return `
-    <div tabindex="0" class="review-item" data-reviewid="${id}">
-          <img class="review-item__image" src="${coverUrl}" alt="${title}">
-          <div class="review-item__body">
-            <div class="review-item__main">
-              <h2 id="review-title" class="review-item__title">${title}</h2>
-              <div class="review-item__more-info">
-                <div class="review-item__createdat">
-                  <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, "id-ID")}
-                </div>
-              </div>
-            </div>
-            <div id="review-description" class="review-item__description">
-              ${description}
-            </div>
-            <div class="review-item__more-info">
-              <div class="review-item__author">
-                Dibuat oleh: ${username}
-              </div>
-            </div>
-            <a class="btn review-item__read-more" href="#/reviews/${id}">
-              Selengkapnya <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
+    <div tabindex="0" data-reviewid="${id}" class="rounded-xl border border-gray-200 bg-white overflow-hidden shadow hover:shadow-md transition">
+      <img src="${coverUrl}" alt="${title}" class="w-full h-64 object-cover object-center">
+      <div class="py-5 space-y-4">
+        
+        <div>
+          <h2 id="review-title" class="text-xl font-bold text-gray-800">${title}</h2>
+           <div class="flex items-center gap-2 text-sm text-gray-500 mt-1">
+             <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, "id-ID")}
+           </div>
         </div>
+        
+        <p id="review-description" class="text-gray-700 line-clamp-4">${description}</p>
+        
+        <div class="text-sm text-gray-600">
+           Dibuat oleh: <span class="font-medium text-gray-800">${username}</span>
+        </div>
+        
+        <a href="#/reviews/${id}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition">
+          Selengkapnya <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
   `;
 }
 
