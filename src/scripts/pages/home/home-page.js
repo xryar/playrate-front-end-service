@@ -12,12 +12,12 @@ export default class HomePage {
 
   async render() {
     return `
-          <section class="container">
-            <h1 class="section-title">List Review</h1>
+          <section class="px-4 py-10 max-w-7xl mx-auto">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-10">List Review</h1>
             
-            <div class="reviews-list__container">
+            <div class="relative">
                 <div id="reviews-list"></div>
-                <div id="reviews-list-loading-container"></div>
+                <div id="reviews-list-loading-container" class="absolute inset-0 flex items-center justify-center"></div>
             </div>
           </section>
         `;
@@ -52,7 +52,7 @@ export default class HomePage {
     }, "");
 
     document.getElementById("reviews-list").innerHTML = `
-            <div class="reviews-list">${html}</div>
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">${html}</div>
         `;
   }
 
@@ -67,11 +67,14 @@ export default class HomePage {
   }
 
   showLoading() {
-    document.getElementById("reviews-list-loading-container").innerHTML =
+    const loading = document.getElementById("reviews-list-loading-container");
+    loading.classList.remove("hidden");
+    loading.innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
   hideLoading() {
-    document.getElementById("reviews-list-loading-container").innerHTML = "";
+    const loading = document.getElementById("reviews-list-loading-container");
+    loading.classList.add("hidden");
   }
 }
