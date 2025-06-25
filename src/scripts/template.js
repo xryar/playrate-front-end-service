@@ -104,56 +104,51 @@ export function generateReviewItemTemplate({
 }
 
 export function generateReviewDetailTemplate({
+  title,
   coverUrl,
   description,
   username,
   createdAt,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, "id-ID");
-  const coverHtml = generateImageDetailTemplate(coverUrl);
 
   return `
-        <div class="container">
-            <div class="review-detail__images__container">
-                <div id="image" class="review-detail__image">${coverHtml}</div>
+    <section class="min-h-screen flex items-center justify-center px-4 py-10 bg-gradient-to-b from-white to-secondary">
+        <div class="w-full max-w-2xl bg-white rounded-lg shadow-md p-6 space-y-6">
+            <!-- Judul -->
+            <h1 class="text-2xl font-bold text-gray-800 text-center">${title}</h1>
+            
+            <!-- Gambar -->
+            <div class="w-full">
+                <img src="${coverUrl}" alt="cover image"
+                 class="w-full h-auto max-h-[400px] object-cover rounded-md border"/>
+            </div>
+            
+            <!-- Info -->
+            <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span><i class="fas fa-calendar-alt mr-1"></i> ${createdAtFormatted}</span>
+                    <span>Dibuat Oleh: <span class="font-medium text-gray-700">${username}</span></span>
+                </div>
+                
+                <!-- Deskripsi -->
+                <div>
+                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Deskripsi</h2>
+                    <p class="text-gray-700 whitespace-pre-line leading-relaxed">${description}</p>
+                </div>
             </div>
         </div>
-        
-        <div class="container">
-            <div class="review-detail__body">
-                <div class="review-detail__more-info">
-                    <div class="review-detail__more-info__inline">
-                      <div id="createdat" class="review-detail__createdat" data-value="${createdAtFormatted}"><i class="fas fa-calendar-alt"></i></div>
-                    </div>
-                    </div>
-                    <div id="author" class="review-detail__author" data-value="${username}">Dibuat oleh:</div>
-              </div>
-              
-              <div class="review-detail__body__description__container">
-                <h2 class="review-detail__description__title">Deskripsi</h2>
-                <div id="description" class="review-detail__description__body">
-                  ${description}
-                </div>
-              </div>
-        </div>
-    `;
-}
-
-export function generateImageDetailTemplate(coverUrl = null, alt = "") {
-  if (!coverUrl) {
-    return `<img class="review-detail__image" src="" alt="Placeholder Image">`;
-  }
-
-  return `
-        <img class="review-detail__image" src="${coverUrl}" alt="${alt}">
-    `;
+    </section>
+  `;
 }
 
 export function generateReviewDetailErrorTemplate(message) {
   return `
-    <div id="review-detail-error" class="review-detail__error">
-      <h2>Terjadi kesalahan pengambilan detail story</h2>
-      <p>${message ? message : "Gunakan jaringan lain atau laporkan error ini."}</p>
-    </div>
+    <section class="min-h-screen flex items-center justify-center px-4 py-10">
+      <div class="text-center bg-red-50 text-red-800 border border-red-200 rounded p-6 max-w-md">
+        <h2 class="text-lg font-semibold mb-2">Terjadi kesalahan</h2>
+        <p>${message ? message : "Gunakan jaringan lain atau laporkan error ini."}</p>
+      </div>
+    </section>
   `;
 }
