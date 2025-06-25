@@ -33,6 +33,7 @@ export default class DetailPage {
   async populateReviewDetail(message, review) {
     document.getElementById("review-detail").innerHTML =
       generateReviewDetailTemplate({
+        title: review.title,
         username: review.username,
         description: review.description,
         coverUrl: review.coverUrl,
