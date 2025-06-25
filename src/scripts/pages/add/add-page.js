@@ -26,7 +26,7 @@ export default class AddPage {
     
               <!-- Gambar -->
               <div>
-                <p class="text-sm text-gray-600 mb-1">Foto dokumentasi (opsional)</p>
+                <p class="text-sm text-gray-600 mb-1">Foto dokumentasi</p>
                 <div class="flex gap-2 flex-wrap">
                   <button id="image-input-button" type="button"
                     class="px-4 py-2 border rounded text-sm hover:bg-gray-50">Ambil Gambar</button>
@@ -35,7 +35,7 @@ export default class AddPage {
                     class="px-4 py-2 border rounded text-sm hover:bg-gray-50">Buka Kamera</button>
                 </div>
                 <div id="camera-container" class="hidden mt-4 space-y-2">
-                  <video id="camera-video" class="w-full rounded border"></video>
+                  <video id="camera-video" class="w-full h-auto rounded border"></video>
                   <canvas id="camera-canvas" class="hidden"></canvas>
                   <div class="flex items-center gap-2">
                     <select id="camera-select" class="border rounded px-2 py-1 text-sm"></select>
@@ -86,13 +86,15 @@ export default class AddPage {
     this.#form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const data = {
-        title: document.getElementById("title-input").value,
-        image: this.#takenImage ? this.#takenImage.blob : null,
-        description: document.getElementById("description").value,
-      };
+      const title = document.getElementById("title-input").value;
+      const description = document.getElementById("description-input").value;
 
-      await this.#presenter.postNewReview(data);
+      if (!this.#takenImage || !this.#takenImage.blob) {
+        alert("Gambar wajib diunggah!");
+        return;
+      }
+
+      await this.#presenter.postNewReview({ title, description, cover: this.#takenImage.blob });
     });
 
     document
@@ -112,24 +114,24 @@ export default class AddPage {
       });
 
     // camera
-    const cameraContainer = document.getElementById("camera-container");
     document
-      .getElementById("open-image-camera-button")
-      .addEventListener("click", async (event) => {
-        cameraContainer.classList.toggle("open");
+    .getElementById('open-image-camera-button')
+    .addEventListener('click',  async (event) => {
+      const cameraContainer = document.getElementById('camera-container');
 
-        this.#isCameraOpen = cameraContainer.classList.contains("open");
-        if (this.#isCameraOpen) {
-          event.currentTarget.textContent = "Tutup Camera";
-          this.#setupCamera();
-          this.#camera.launch();
+      this.#isCameraOpen = !this.#isCameraOpen;
 
-          return;
-        }
-
-        event.currentTarget.textContent = "Buka Kamera";
+      if (this.#isCameraOpen) {
+        cameraContainer.classList.remove('hidden');
+        event.currentTarget.textContent = 'Tutup Kamera';
+        this.#setupCamera();
+        await this.#camera.launch();
+      } else {
+        cameraContainer.classList.add('hidden');
+        event.currentTarget.textContent = 'Buka Kamera';
         this.#camera.stop();
-      });
+      }
+    });
   }
 
   #setupCamera() {

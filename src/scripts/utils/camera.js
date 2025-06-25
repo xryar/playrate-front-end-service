@@ -19,14 +19,14 @@ export default class Camera {
     window.currentStreams = [...window.currentStreams, stream];
   }
 
-  static stopALlStreams() {
+  static stopAllStreams() {
     if (!Array.isArray(window.currentStreams)) {
       window.currentStreams = [];
       return;
     }
 
     window.currentStreams.forEach((stream) => {
-      if (stream.isActive) {
+      if (stream.active) {
         stream.getTracks().forEach((track) => track.stop());
       }
     });
@@ -46,12 +46,10 @@ export default class Camera {
         return;
       }
 
-      this.#height =
-        (this.#videoElement.videoHeight * this.#width) /
-        this.#videoElement.videoWidth;
+      this.#height = (this.#videoElement.videoHeight * this.#width) / this.#videoElement.videoWidth;
 
-      this.#canvasElement.setAttribute("width", this.#width);
-      this.#canvasElement.setAttribute("height", this.#height);
+      this.#canvasElement.setAttribute('width', this.#width);
+      this.#canvasElement.setAttribute('height', this.#height);
 
       this.#streaming = true;
     };
@@ -59,50 +57,50 @@ export default class Camera {
     this.#selectCameraElement.onchange = async () => {
       await this.stop();
       await this.launch();
-    };
+    }
   }
 
   async #populateDeviceList(stream) {
     try {
       if (!(stream instanceof MediaStream)) {
-        return Promise.reject(Error("MediaStream not found"));
+        return Promise.reject(Error('MediaStream not found'));
       }
 
       const { deviceId } = stream.getVideoTracks()[0].getSettings();
 
       const enumeratedDevices = await navigator.mediaDevices.enumerateDevices();
-      const list = enumeratedDevices.find((device) => {
-        return device.kind === "videoinput";
+      const list = enumeratedDevices.filter((device) => {
+        return device.kind === 'videoinput';
       });
 
       const html = list.reduce((accumulator, device, currentIndex) => {
         return accumulator.concat(`
-          <option 
-              value="${device.deviceId}"
-              ${deviceId == device.deviceId ? "selected" : ""}
-          >
-              ${device.label || `Camera ${currentIndex + 1}`}
-          </option>    
-        `);
-      }, "");
+                    <option 
+                        value="${device.deviceId}"
+                        ${deviceId == device.deviceId ? 'selected' : ''}
+                    >
+                        ${device.label || `Camera ${currentIndex + 1}`}
+                    </option>    
+                `);
+      }, '');
 
       this.#selectCameraElement.innerHTML = html;
     } catch (error) {
-      console.log("#populateDeviceList Error: ", error);
+      console.log('#populateDevicesList: error:' ,error);
     }
   }
 
   async #getStream() {
     try {
       const deviceId =
-        !this.#streaming && this.#selectCameraElement.value
-          ? undefined
-          : { exact: this.#selectCameraElement.value };
+          !this.#streaming && !this.#selectCameraElement.value
+              ? undefined
+              : { exact: this.#selectCameraElement.value }
 
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           aspectRatio: 4 / 3,
-          deviceId,
+          deviceId
         },
       });
 
@@ -110,7 +108,7 @@ export default class Camera {
 
       return stream;
     } catch (error) {
-      console.log("#getStream Error: ", error);
+      console.log('#getStream Error: ', error);
       return null;
     }
   }
@@ -142,14 +140,9 @@ export default class Camera {
   }
 
   #clearCanvas() {
-    const context = this.#canvasElement.getContext("2d");
-    context.fillStyle = "#AAAAAA";
-    context.fillRect(
-      0,
-      0,
-      this.#canvasElement.width,
-      this.#canvasElement.height,
-    );
+    const context = this.#canvasElement.getContext('2d');
+    context.fillStyle = '#AAAAAA';
+    context.fillRect(0, 0, this.#canvasElement.width, this.#canvasElement.height);
   }
 
   async takePicture() {
@@ -157,7 +150,7 @@ export default class Camera {
       return null;
     }
 
-    const context = this.#canvasElement.getContext("2d");
+    const context = this.#canvasElement.getContext('2d');
 
     this.#canvasElement.width = this.#width;
     this.#canvasElement.height = this.#height;
