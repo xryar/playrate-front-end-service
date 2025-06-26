@@ -64,10 +64,10 @@ class App {
     if (isLogin) {
       const logoutButtons = document.querySelectorAll("#logout-button");
       logoutButtons.forEach((btn) => {
-        btn.addEventListener("click", (event) => {
+        btn.addEventListener("click", async (event) => {
           event.preventDefault();
           if (confirm("Apakah Anda yakin ingin keluar?")) {
-            getLogout();
+            await getLogout();
             location.hash = "/login";
           }
         });

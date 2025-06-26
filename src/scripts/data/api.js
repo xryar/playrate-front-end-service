@@ -136,7 +136,7 @@ export async function Logout() {
   }
 
   const response = await fetch(`${CONFIG.BASE_URL}/logout`, {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },

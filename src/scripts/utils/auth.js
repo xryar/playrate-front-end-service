@@ -51,16 +51,6 @@ export function putRefreshToken(refreshToken) {
   }
 }
 
-export function removeAccessToken() {
-  try {
-    localStorage.removeItem(CONFIG.ACCESS_TOKEN);
-    return true;
-  } catch (error) {
-    console.error("Remove Access Token Error: ", error);
-    return false;
-  }
-}
-
 const unauthenticatedRoutesOnly = ["/login", "/register"];
 
 export function checkUnauthenticatedRouteOnly(page) {
@@ -95,7 +85,7 @@ export async function getLogout() {
       return;
     }
 
-    removeAccessToken();
+    localStorage.removeItem(CONFIG.ACCESS_TOKEN);
     localStorage.removeItem(CONFIG.REFRESH_TOKEN);
 
     return true;
