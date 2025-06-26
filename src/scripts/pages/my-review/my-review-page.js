@@ -56,7 +56,7 @@ export default  class MyReviewPage {
         `;
 
         container.querySelectorAll("[data-delete-id]").forEach((btn) => {
-            btn.addEventListener("click", async (event) => {
+            btn.addEventListener("click", async () => {
                 const reviewId = btn.getAttribute("data-delete-id");
                 if (confirm("Apakah anda yakin ingin menghapus review ini?")) {
                     const card = btn.closest("[data-reviewid]");
