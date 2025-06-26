@@ -6,6 +6,7 @@ import {
 } from "../template";
 import { getActiveRoute } from "../routes/url-parser";
 import routes from "../routes/routes";
+import {showConfirm, showSuccess, showToast} from "../utils/alert";
 
 class App {
   #content = null;
@@ -66,8 +67,15 @@ class App {
       logoutButtons.forEach((btn) => {
         btn.addEventListener("click", async (event) => {
           event.preventDefault();
-          if (confirm("Apakah Anda yakin ingin keluar?")) {
+          const { isConfirmed } = await showConfirm({
+            title: "Keluar Akun?",
+            text: "Anda akan keluar dari akun Anda.",
+          });
+
+          if (isConfirmed) {
             await getLogout();
+            await showSuccess("Berhasil keluar dari akun!");
+            showToast("Logout berhasil!");
             location.hash = "/login";
           }
         });

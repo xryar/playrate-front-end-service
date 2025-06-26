@@ -5,6 +5,7 @@ import {
 } from "../../template";
 import * as ReviewsAPI from "../../data/api";
 import MyReviewPresenter from "./my-review-presenter";
+import {showConfirm} from "../../utils/alert";
 
 export default  class MyReviewPage {
     #presenter;
@@ -58,14 +59,18 @@ export default  class MyReviewPage {
         container.querySelectorAll("[data-delete-id]").forEach((btn) => {
             btn.addEventListener("click", async () => {
                 const reviewId = btn.getAttribute("data-delete-id");
-                if (confirm("Apakah anda yakin ingin menghapus review ini?")) {
-                    const card = btn.closest("[data-reviewid]");
-                    card.classList.add("transition-all", "duration-300", "opacity-0", "scale-95");
+                const { isConfirmed } = await showConfirm({
+                    title: "Hapus Review?",
+                    text: "Aksi ini tidak dapat dibatalkan. Apakah anda yakin ingin menghapus review ini?",
+                });
 
-                    await new Promise((resolve) => setTimeout(resolve, 300));
-                    await this.#presenter.deleteReview(reviewId);
-                    card.remove();
-                }
+                if (!isConfirmed) return;
+                const card = btn.closest("[data-reviewid]");
+                card.classList.add("transition-all", "duration-300", "opacity-0", "scale-95");
+
+                await new Promise((resolve) => setTimeout(resolve, 300));
+                await this.#presenter.deleteReview(reviewId);
+                card.remove();
             })
         })
     }

@@ -1,3 +1,5 @@
+import {showConfirm, showError, showSuccess} from "../../utils/alert";
+
 export default class MyReviewPresenter {
     #view;
     #model;
@@ -12,15 +14,15 @@ export default class MyReviewPresenter {
             const response = await this.#model.deleteReview(id);
 
             if (!response.ok) {
-                alert("Gagal menghapus review");
+                showError("Gagal menghapus review");
                 return;
             }
 
-            alert("review berhasil dihapus");
+            await showSuccess("review berhasil dihapus");
             await this.loadMyReview();
         } catch (error) {
             console.error("deleteReview Error: ", error);
-            alert("Terjadi kesalahan");
+            showError("Terjadi kesalahan");
         }
     }
 

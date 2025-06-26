@@ -2,6 +2,7 @@ import AddPresenter from "./add-presenter";
 import * as ReviewsAPI from "../../data/api";
 import { convertBase64ToBlob } from "../../utils";
 import Camera from "../../utils/camera";
+import {showError, showSuccess} from "../../utils/alert";
 
 export default class AddPage {
   #presenter;
@@ -90,7 +91,15 @@ export default class AddPage {
       const description = document.getElementById("description-input").value;
 
       if (!this.#takenImage || !this.#takenImage.blob) {
-        alert("Gambar wajib diunggah!");
+        showError("Gambar wajib diunggah!");
+        return;
+      }
+      if (!title.trim()) {
+        showError("Judul tidak boleh kosong!");
+        return;
+      }
+      if (!description.trim()) {
+        showError("Deskripsi tidak boleh kosong!");
         return;
       }
 
@@ -153,7 +162,6 @@ export default class AddPage {
       const image = await this.#camera.takePicture();
       await this.#addTakenPicture(image);
       await this.#populateTakenPicture();
-      alert(URL.createObjectURL(image));
     });
   }
 
@@ -199,14 +207,14 @@ export default class AddPage {
   }
 
   storeSuccessfully(message) {
-    console.log(message);
-    this.clearForm();
-
-    location.href = "/";
+    showSuccess(message).then(() => {
+      this.clearForm();
+      location.href = "/";
+    });
   }
 
   storeFailed(message) {
-    alert(message);
+    showError(message);
   }
 
   clearForm() {

@@ -1,5 +1,6 @@
 import * as ReviewsAPI from "../../../data/api";
 import RegisterPresenter from "./register-presenter";
+import {showError, showSuccess} from "../../../utils/alert";
 
 export default class RegisterPage {
   #presenter = null;
@@ -72,13 +73,13 @@ export default class RegisterPage {
   }
 
   registeredSuccessfully(message) {
-    console.log(message);
-
-    location.hash = "/login";
+    showSuccess(message).then(() => {
+      location.hash = "/login";
+    })
   }
 
   registeredFailed(message) {
-    alert(message);
+    showError(message)
   }
 
   showSubmitLoadingButton() {

@@ -1,6 +1,7 @@
 import LoginPresenter from "./login-presenter";
 import * as ReviewsAPI from "../../../data/api";
 import * as AuthModel from "../../../utils/auth";
+import {showError, showSuccess, showToast} from "../../../utils/alert";
 
 export default class LoginPage {
   #presenter = null;
@@ -67,13 +68,14 @@ export default class LoginPage {
   }
 
   loginSuccessfully(message) {
-    console.log(message);
-
-    location.hash = "/";
+    showSuccess(message).then(() => {
+      showToast("Login Berhasil!");
+      location.hash = "/";
+    })
   }
 
   loginFailed(message) {
-    alert(message);
+    showError(message)
   }
 
   showSubmitLoadingButton() {
