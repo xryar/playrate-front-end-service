@@ -94,7 +94,11 @@ export default class AddPage {
         return;
       }
 
-      await this.#presenter.postNewReview({ title, description, cover: this.#takenImage.blob });
+      await this.#presenter.postNewReview({
+        title,
+        description,
+        cover: this.#takenImage.blob,
+      });
     });
 
     document
@@ -115,23 +119,23 @@ export default class AddPage {
 
     // camera
     document
-    .getElementById('open-image-camera-button')
-    .addEventListener('click',  async (event) => {
-      const cameraContainer = document.getElementById('camera-container');
+      .getElementById("open-image-camera-button")
+      .addEventListener("click", async (event) => {
+        const cameraContainer = document.getElementById("camera-container");
 
-      this.#isCameraOpen = !this.#isCameraOpen;
+        this.#isCameraOpen = !this.#isCameraOpen;
 
-      if (this.#isCameraOpen) {
-        cameraContainer.classList.remove('hidden');
-        event.currentTarget.textContent = 'Tutup Kamera';
-        this.#setupCamera();
-        await this.#camera.launch();
-      } else {
-        cameraContainer.classList.add('hidden');
-        event.currentTarget.textContent = 'Buka Kamera';
-        this.#camera.stop();
-      }
-    });
+        if (this.#isCameraOpen) {
+          cameraContainer.classList.remove("hidden");
+          event.currentTarget.textContent = "Tutup Kamera";
+          this.#setupCamera();
+          await this.#camera.launch();
+        } else {
+          cameraContainer.classList.add("hidden");
+          event.currentTarget.textContent = "Buka Kamera";
+          this.#camera.stop();
+        }
+      });
   }
 
   #setupCamera() {

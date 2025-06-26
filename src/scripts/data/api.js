@@ -1,5 +1,5 @@
 import CONFIG from "../config";
-import { getAccessToken } from "../utils/auth";
+import {getAccessToken, getRefreshToken} from "../utils/auth";
 
 const ENDPOINTS = {
   REGISTER: `${CONFIG.BASE_URL}/users`,
@@ -125,4 +125,24 @@ export async function getMyReviews() {
     ...json,
     ok: response.ok,
   };
+}
+
+export async function Logout() {
+  const refreshToken = getRefreshToken();
+
+  if (!refreshToken) {
+    console.warn("No refresh token found.");
+    return { ok: false, message: "Tidak ada refresh token" };
+  }
+
+  const response = await fetch(`${CONFIG.BASE_URL}/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refreshToken }),
+  });
+
+  const json = await response.json();
+  return { ...json, ok: response.ok };
 }

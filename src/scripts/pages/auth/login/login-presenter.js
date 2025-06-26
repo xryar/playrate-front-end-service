@@ -21,6 +21,7 @@ export default class LoginPresenter {
       }
 
       this.#authModel.putAccessToken(response.data.accessToken);
+      this.#authModel.putRefreshToken(response.data.refreshToken);
 
       this.#view.loginSuccessfully(response.message, response.data);
     } catch (error) {

@@ -1,5 +1,6 @@
 import CONFIG from "../config";
 import { getActiveRoute } from "../routes/url-parser";
+import {Logout} from "../data/api";
 
 export function getAccessToken() {
   try {
@@ -40,6 +41,16 @@ export function getRefreshToken() {
   }
 }
 
+export function putRefreshToken(refreshToken) {
+  try {
+    localStorage.setItem(CONFIG.REFRESH_TOKEN, refreshToken);
+    return true;
+  } catch (error) {
+    console.log("Put Access Token Error: ", error);
+    return false;
+  }
+}
+
 export function removeAccessToken() {
   try {
     localStorage.removeItem(CONFIG.ACCESS_TOKEN);
@@ -75,6 +86,21 @@ export function checkAuthenticatedRoute(page) {
   return page;
 }
 
-export function getLogout() {
-  removeAccessToken();
+export async function getLogout() {
+  try {
+    const response = await Logout();
+
+    if (!response.ok) {
+      console.error("Logout Error: ", response.message);
+      return;
+    }
+
+    removeAccessToken();
+    localStorage.removeItem(CONFIG.REFRESH_TOKEN);
+
+    return true;
+  } catch (error) {
+    console.error("Logout Error: ", error);
+    return false;
+  }
 }
