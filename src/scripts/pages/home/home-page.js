@@ -69,8 +69,7 @@ export default class HomePage {
   showLoading() {
     const loading = document.getElementById("reviews-list-loading-container");
     loading.classList.remove("hidden");
-    loading.innerHTML =
-      generateLoaderAbsoluteTemplate();
+    loading.innerHTML = generateLoaderAbsoluteTemplate();
   }
 
   hideLoading() {

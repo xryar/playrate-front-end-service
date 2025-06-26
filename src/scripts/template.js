@@ -36,19 +36,24 @@ export function generateUnauthenticatedNavigationListTemplate() {
 
 export function generateAuthenticatedNavigationListTemplate() {
   return `
-        <li> 
-          <a id="new-review-button" href="#/new"
-            class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition font-medium">
-            <i class="fas fa-plus"></i> Add Review
-          </a>
-        </li>
-        <li> 
-          <a id="logout-button" href="#/logout"
-            class="inline-flex items-center gap-2 text-red-600 font-semibold hover:underline">
-            <i class="fas fa-sign-out-alt"></i> Logout
-          </a>
-        </li>
-    `;
+     <li>
+       <a id="my-review-button" href="#/my-reviews" 
+          class="inline-flex items-center gap-2 font-medium">My Review
+       </a>
+     </li>
+     <li>
+       <a id="new-review-button" href="#/new"
+         class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition font-medium">
+         <i class="fas fa-plus"></i> Add Review
+       </a>
+     </li>
+     <li> 
+       <a id="logout-button" href="#/logout"
+         class="inline-flex items-center gap-2 text-red-600 font-semibold hover:underline">
+         <i class="fas fa-sign-out-alt"></i> Logout
+       </a>
+     </li>
+  `;
 }
 
 export function generateReviewsListEmptyTemplate() {

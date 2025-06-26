@@ -7,6 +7,7 @@ import RegisterPage from "../pages/auth/register/register-page";
 import HomePage from "../pages/home/home-page";
 import DetailPage from "../pages/detail/detail-page";
 import AddPage from "../pages/add/add-page";
+import MyReviewPage from "../pages/my-review/my-review-page";
 
 const routes = {
   "/login": () => checkUnauthenticatedRouteOnly(new LoginPage()),
@@ -15,6 +16,7 @@ const routes = {
   "/": () => checkAuthenticatedRoute(new HomePage()),
   "/new": () => checkAuthenticatedRoute(new AddPage()),
   "/reviews/:id": () => checkAuthenticatedRoute(new DetailPage()),
+  "/my-reviews": () => checkAuthenticatedRoute(new MyReviewPage())
 };
 
 export default routes;
