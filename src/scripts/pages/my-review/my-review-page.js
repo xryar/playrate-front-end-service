@@ -1,5 +1,5 @@
 import {
-    generateLoaderAbsoluteTemplate, generateReviewItemTemplate,
+    generateLoaderAbsoluteTemplate, generateMyReviewItemTemplate, generateReviewItemTemplate,
     generateReviewsListEmptyTemplate,
     generateReviewsListErrorTemplate
 } from "../../template";
@@ -36,9 +36,11 @@ export default  class MyReviewPage {
             return;
         }
 
+        const container = document.getElementById("my-review-list");
+
         const html = listReviews
             .map((review) =>
-                generateReviewItemTemplate({
+                generateMyReviewItemTemplate({
                     id: review.id,
                     username: review.username,
                     title: review.title,
@@ -49,9 +51,23 @@ export default  class MyReviewPage {
             )
             .join("");
 
-        document.getElementById("my-review-list").innerHTML = `
+        container.innerHTML = `
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">${html}</div>
         `;
+
+        container.querySelectorAll("[data-delete-id]").forEach((btn) => {
+            btn.addEventListener("click", async (event) => {
+                const reviewId = btn.getAttribute("data-delete-id");
+                if (confirm("Apakah anda yakin ingin menghapus review ini?")) {
+                    const card = btn.closest("[data-reviewid]");
+                    card.classList.add("transition-all", "duration-300", "opacity-0", "scale-95");
+
+                    await new Promise((resolve) => setTimeout(resolve, 300));
+                    this.#presenter.deleteReview(reviewId);
+                    card.remove();
+                }
+            })
+        })
     }
 
     populateReviewsListEmpty() {

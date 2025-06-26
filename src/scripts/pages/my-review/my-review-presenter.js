@@ -7,6 +7,23 @@ export default class MyReviewPresenter {
         this.#model = model;
     }
 
+    async deleteReview(id) {
+        try {
+            const response = await this.#model.deleteReview(id);
+
+            if (!response.ok) {
+                alert("Gagal menghapus review");
+                return;
+            }
+
+            alert("review berhasil dihapus");
+            await this.loadMyReview();
+        } catch (error) {
+            console.error("deleteReview Error: ", error);
+            alert("Terjadi kesalahan");
+        }
+    }
+
     async loadMyReview() {
         this.#view.showLoading();
 

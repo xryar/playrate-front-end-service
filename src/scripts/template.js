@@ -94,7 +94,7 @@ export function generateReviewItemTemplate({
            </div>
         </div>
         
-        <p id="review-description" class="text-gray-700 line-clamp-4">${description}</p>
+        <p id="review-description" class="text-gray-700 line-clamp-3">${description}</p>
         
         <div class="text-sm text-gray-600">
            Dibuat oleh: <span class="font-medium text-gray-800">${username}</span>
@@ -103,6 +103,43 @@ export function generateReviewItemTemplate({
         <a href="#/reviews/${id}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition">
           Selengkapnya <i class="fas fa-arrow-right"></i>
         </a>
+      </div>
+    </div>
+  `;
+}
+
+export function generateMyReviewItemTemplate({
+  id,
+  username,
+  title,
+  description,
+  coverUrl,
+  createdAt,
+}) {
+  return `
+    <div tabindex="0" data-reviewid="${id}" class="rounded-xl border border-gray-200 bg-white overflow-hidden shadow hover:shadow-md transition">
+      <img src="${coverUrl}" alt="${title}" class="w-full h-64 object-cover object-center">
+      <div class="px-6 py-5 space-y-4">
+        
+        <div>
+          <h2 id="review-title" class="text-xl font-bold text-gray-800">${title}</h2>
+           <div class="flex items-center gap-2 text-sm text-gray-500 mt-1">
+             <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, "id-ID")}
+           </div>
+        </div>
+        
+        <p id="review-description" class="text-gray-700 line-clamp-3">${description}</p>
+        
+        <div class="text-sm text-gray-600">
+           Dibuat oleh: <span class="font-medium text-gray-800">${username}</span>
+        </div>
+        
+        <a href="#/reviews/${id}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition">
+          Selengkapnya <i class="fas fa-arrow-right"></i>
+        </a>
+        <button data-delete-id="${id}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-red-500 bg-red-500 text-red-50 rounded hover:bg-red-50 hover:text-red-500 transition">
+          <i class="fas fa-trash"></i> Hapus
+        </button>
       </div>
     </div>
   `;
