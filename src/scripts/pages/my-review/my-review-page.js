@@ -63,7 +63,7 @@ export default  class MyReviewPage {
                     card.classList.add("transition-all", "duration-300", "opacity-0", "scale-95");
 
                     await new Promise((resolve) => setTimeout(resolve, 300));
-                    this.#presenter.deleteReview(reviewId);
+                    await this.#presenter.deleteReview(reviewId);
                     card.remove();
                 }
             })
