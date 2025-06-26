@@ -44,6 +44,7 @@ export default  class MyReviewPage {
                     title: review.title,
                     description: review.description,
                     coverUrl: review.coverUrl,
+                    createdAt: review.createdAt,
                 })
             )
             .join("");
