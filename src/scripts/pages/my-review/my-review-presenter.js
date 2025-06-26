@@ -1,4 +1,4 @@
-import {showConfirm, showError, showSuccess} from "../../utils/alert";
+import { showError, showSuccess} from "../../utils/alert";
 
 export default class MyReviewPresenter {
     #view;

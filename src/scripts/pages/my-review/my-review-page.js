@@ -1,5 +1,5 @@
 import {
-    generateLoaderAbsoluteTemplate, generateMyReviewItemTemplate, generateReviewItemTemplate,
+    generateLoaderAbsoluteTemplate, generateMyReviewItemTemplate,
     generateReviewsListEmptyTemplate,
     generateReviewsListErrorTemplate
 } from "../../template";
