@@ -36,20 +36,21 @@ export function generateUnauthenticatedNavigationListTemplate() {
 
 export function generateAuthenticatedNavigationListTemplate() {
   return `
-     <li>
+     <li class="w-full">
        <a id="my-review-button" href="#/my-reviews" 
-          class="inline-flex items-center gap-2 font-medium">My Review
+          class="block text-center w-full px-4 py-2 rounded font-medium text-gray-800 hover:bg-primary hover:text-white transition whitespace-nowrap">
+          My Review
        </a>
      </li>
-     <li>
+     <li class="w-full">
        <a id="new-review-button" href="#/new"
-         class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition font-medium">
+         class="block text-center w-full px-4 py-2 rounded font-medium text-gray-800 hover:bg-primary hover:text-white transition whitespace-nowrap">
          <i class="fas fa-plus"></i> Add Review
        </a>
      </li>
-     <li> 
+     <li class="w-full"> 
        <a id="logout-button" href="#/logout"
-         class="inline-flex items-center gap-2 text-red-600 font-semibold hover:underline">
+         class="block text-center w-full px-4 py-2 text-red-500 rounded hover:bg-red-500 hover:text-red-50 transition">
          <i class="fas fa-sign-out-alt"></i> Logout
        </a>
      </li>
