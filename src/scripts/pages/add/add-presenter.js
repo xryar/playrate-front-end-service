@@ -7,13 +7,14 @@ export default class AddPresenter {
     this.#model = model;
   }
 
-  async postNewReview({ cover, title, description }) {
+  async postNewReview({ cover, title, description, rating }) {
     this.#view.showSubmitLoadingButton();
     try {
       const data = {
         cover,
         title,
         description,
+        rating,
       };
       const response = await this.#model.addReview(data);
 

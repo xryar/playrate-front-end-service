@@ -33,7 +33,7 @@ export default class HomePage {
   }
 
   populateReviewsList(message, listReviews) {
-    if (listReviews.left <= 0) {
+    if (!listReviews || listReviews.length === 0) {
       this.populateReviewsListEmpty();
       return;
     }

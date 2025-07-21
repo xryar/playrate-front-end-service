@@ -38,6 +38,7 @@ export default class DetailPage {
         description: review.description,
         coverUrl: review.coverUrl,
         createdAt: review.createdAt,
+        rating: review.rating,
       });
   }
 

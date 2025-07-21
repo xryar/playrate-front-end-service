@@ -53,6 +53,13 @@ export default class AddPage {
                 <textarea id="description-input" name="description" placeholder="Masukkan deskripsi"
                   class="w-full min-h-[100px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
               </div>
+              
+              <!-- Rating -->
+              <div>
+                <label for="rating-input" class="block text-sm font-medium text-gray-700 mb-1">Rating (1.0 - 5.0)</label>
+                <input id="rating-input" name="rating" type="number" step="0.1" min="1" max="5" placeholder="Misal: 4.5"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary">
+              </div>
     
               <!-- Tombol -->
               <div class="space-y-3 pt-4">
@@ -89,6 +96,7 @@ export default class AddPage {
 
       const title = document.getElementById("title-input").value;
       const description = document.getElementById("description-input").value;
+      const rating = parseFloat(document.getElementById("rating-input").value);
 
       if (!this.#takenImage || !this.#takenImage.blob) {
         showError("Gambar wajib diunggah!");
@@ -103,10 +111,16 @@ export default class AddPage {
         return;
       }
 
+      if (isNaN(rating) || rating < 1 || rating > 5) {
+        showError("Rating harus antara 1.0 dan 5.0!");
+        return;
+      }
+
       await this.#presenter.postNewReview({
         title,
         description,
         cover: this.#takenImage.blob,
+        rating,
       });
     });
 

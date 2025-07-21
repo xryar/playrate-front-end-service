@@ -152,8 +152,21 @@ export function generateReviewDetailTemplate({
   description,
   username,
   createdAt,
+  rating,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, "id-ID");
+
+  const renderStars = (value) => {
+    const fullStars = Math.floor(value);
+    const halfStar = value % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+
+    return `
+      ${'<i class="fas fa-star text-yellow-400"></i>'.repeat(fullStars)}
+      ${halfStar ? '<i class="fas fa-star-half-alt text-yellow-400"></i>' : ''}
+      ${'<i class="far fa-star text-yellow-400"></i>'.repeat(emptyStars)}
+    `;
+  }
 
   return `
     <section class="min-h-screen flex items-center justify-center px-4 py-10 bg-gradient-to-b from-white to-secondary">
@@ -171,7 +184,14 @@ export function generateReviewDetailTemplate({
             <div class="space-y-2">
                 <div class="flex items-center justify-between text-sm text-gray-500">
                     <span><i class="fas fa-calendar-alt mr-1"></i> ${createdAtFormatted}</span>
-                    <span>Dibuat Oleh: <span class="font-medium text-gray-700">${username}</span></span>
+                    
+                     <span class="flex items-center gap-1 text-gray-700">
+                       Rating: ${renderStars(rating)}
+                     </span>
+                </div>
+                
+                <div class="text-sm text-gray-500">
+                  Dibuat Oleh: <span class="font-medium text-gray-700">${username}</span>
                 </div>
                 
                 <!-- Deskripsi -->

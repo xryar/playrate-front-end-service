@@ -72,13 +72,14 @@ export async function getReviewById(id) {
   };
 }
 
-export async function addReview({ title, description, cover }) {
+export async function addReview({ title, description, cover, rating }) {
   const accessToken = getAccessToken();
 
   const formData = new FormData();
   formData.append("cover", cover);
   formData.set("title", title);
   formData.set("description", description);
+  formData.set("rating", rating);
 
   const response = await fetch(ENDPOINTS.ADD_REVIEW, {
     method: "POST",
