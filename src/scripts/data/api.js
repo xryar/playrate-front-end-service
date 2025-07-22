@@ -1,5 +1,6 @@
 import CONFIG from "../config";
 import {getAccessToken, getRefreshToken} from "../utils/auth";
+import {withTokenRetry} from "../utils/refresh-token";
 
 const ENDPOINTS = {
   REGISTER: `${CONFIG.BASE_URL}/users`,
@@ -46,103 +47,114 @@ export async function Login({ username, password }) {
 }
 
 export async function getAllReviews() {
-  const accessToken = getAccessToken();
+  return withTokenRetry(async () => {
+    const accessToken = getAccessToken();
+    const response = await fetch(ENDPOINTS.GET_REVIEWS, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const json = await response.json();
 
-  const response = await fetch(ENDPOINTS.GET_REVIEWS, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  const json = await response.json();
-  return {
-    ...json,
-    ok: response.ok,
-  };
+    return {
+      ...json,
+      ok: response.ok,
+    };
+  })
 }
 
 export async function getReviewById(id) {
-  const accessToken = getAccessToken();
-  const response = await fetch(ENDPOINTS.DETAIL_REVIEW(id), {
-    method: "GET",
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  const json = await response.json();
+  return withTokenRetry(async () => {
+    const accessToken = getAccessToken();
+    const response = await fetch(ENDPOINTS.DETAIL_REVIEW(id), {
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const json = await response.json();
 
-  return {
-    ...json,
-    ok: response.ok,
-  };
+    return {
+      ...json,
+      ok: response.ok,
+    };
+  })
 }
 
 export async function addReview({ title, description, cover, rating }) {
-  const accessToken = getAccessToken();
+  return withTokenRetry(async () => {
+    const accessToken = getAccessToken();
 
-  const formData = new FormData();
-  formData.append("cover", cover);
-  formData.set("title", title);
-  formData.set("description", description);
-  formData.set("rating", rating);
+    const formData = new FormData();
+    formData.append("cover", cover);
+    formData.set("title", title);
+    formData.set("description", description);
+    formData.set("rating", rating);
 
-  const response = await fetch(ENDPOINTS.ADD_REVIEW, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: formData,
-  });
-  const json = await response.json();
+    const response = await fetch(ENDPOINTS.ADD_REVIEW, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+    const json = await response.json();
 
-  return {
-    ...json,
-    ok: response.ok,
-  };
+    return {
+      ...json,
+      ok: response.ok,
+    };
+  })
 }
 
 export async function searchReviews(query) {
-  const accessToken = getAccessToken();
+  return withTokenRetry(async () => {
+    const accessToken = getAccessToken();
 
-  const response = await fetch(ENDPOINTS.SEARCH_REVIEWS(query), {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const json = await response.json();
+    const response = await fetch(ENDPOINTS.SEARCH_REVIEWS(query), {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const json = await response.json();
 
-  return {
-    ...json,
-    ok: response.ok,
-  }
+    return {
+      ...json,
+      ok: response.ok,
+    }
+  })
 }
 
 export async function deleteReview(id) {
-  const accessToken = getAccessToken();
-  const response = await fetch(ENDPOINTS.DELETE_REVIEW(id), {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const json = await response.json();
+  return withTokenRetry(async () => {
+    const accessToken = getAccessToken();
+    const response = await fetch(ENDPOINTS.DELETE_REVIEW(id), {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const json = await response.json();
 
-  return {
-    ...json,
-    ok: response.ok,
-  };
+    return {
+      ...json,
+      ok: response.ok,
+    };
+  })
 }
 
 export async function getMyReviews() {
-  const accessToken = getAccessToken();
-  const response = await fetch(ENDPOINTS.GET_MY_REVIEWS, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const json = await response.json();
+  return withTokenRetry(async () => {
+    const accessToken = getAccessToken();
+    const response = await fetch(ENDPOINTS.GET_MY_REVIEWS, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const json = await response.json();
 
-  return {
-    ...json,
-    ok: response.ok,
-  };
+    return {
+      ...json,
+      ok: response.ok,
+    };
+  })
 }
 
 export async function Logout() {
