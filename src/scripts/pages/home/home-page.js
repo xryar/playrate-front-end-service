@@ -13,7 +13,15 @@ export default class HomePage {
   async render() {
     return `
           <section class="px-4 py-10 max-w-7xl mx-auto">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-10">List Review</h1>
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">List Review</h1>
+            
+            <div class="mb-10 max-w-md mx-auto">
+                <input
+                type="text"
+                id="search-input"
+                placeholder="Cari Review berdasarkan judul..."
+                class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
             
             <div class="relative">
                 <div id="reviews-list"></div>
@@ -29,7 +37,23 @@ export default class HomePage {
       model: ReviewsAPI,
     });
 
+    this._initializedSearchInput();
     await this.#presenter.initialReviews();
+  }
+
+  _initializedSearchInput() {
+    const searchInput = document.getElementById("search-input");
+    const handleSearch = this._debounce(async (e) => {
+      const query = e.target.value.trim();
+
+      if (query.length > 0) {
+        await this.#presenter.search(query);
+      } else {
+        await this.#presenter.initialReviews();
+      }
+    }, 300);
+
+    searchInput.addEventListener("input", handleSearch);
   }
 
   populateReviewsList(message, listReviews) {
@@ -54,6 +78,14 @@ export default class HomePage {
     document.getElementById("reviews-list").innerHTML = `
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">${html}</div>
         `;
+  }
+
+  _debounce(callback, delay) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => callback.apply(this, args), delay);
+    };
   }
 
   populateReviewsListEmpty() {

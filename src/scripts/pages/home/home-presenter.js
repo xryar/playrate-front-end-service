@@ -25,4 +25,24 @@ export default class HomePresenter {
       this.#view.hideLoading();
     }
   }
+
+  async search(query) {
+    this.#view.showLoading();
+    try {
+      const response = await this.#model.searchReviews(query);
+
+      if (!response.ok) {
+        console.error("search Error: ", response);
+        this.#view.populateReviewsListError(response.message);
+        return;
+      }
+
+      this.#view.populateReviewsList(response.message, response.data.reviews);
+    } catch (error) {
+      console.error("search Error: ", error);
+      this.#view.populateReviewsListError(error.message);
+    } finally {
+      this.#view.hideLoading();
+    }
+  }
 }

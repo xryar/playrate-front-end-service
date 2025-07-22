@@ -7,6 +7,7 @@ const ENDPOINTS = {
   LOGOUT: `${CONFIG.BASE_URL}/logout`,
   ADD_REVIEW: `${CONFIG.BASE_URL}/reviews`,
   GET_REVIEWS: `${CONFIG.BASE_URL}/reviews`,
+  SEARCH_REVIEWS: (query) => `${CONFIG.BASE_URL}/reviews/search?query=${encodeURIComponent(query)}`,
   DETAIL_REVIEW: (id) => `${CONFIG.BASE_URL}/reviews/${id}`,
   GET_MY_REVIEWS: `${CONFIG.BASE_URL}/reviews/my-reviews`,
   DELETE_REVIEW: (id) => `${CONFIG.BASE_URL}/reviews/${id}`,
@@ -94,6 +95,22 @@ export async function addReview({ title, description, cover, rating }) {
     ...json,
     ok: response.ok,
   };
+}
+
+export async function searchReviews(query) {
+  const accessToken = getAccessToken();
+
+  const response = await fetch(ENDPOINTS.SEARCH_REVIEWS(query), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const json = await response.json();
+
+  return {
+    ...json,
+    ok: response.ok,
+  }
 }
 
 export async function deleteReview(id) {
